@@ -26,7 +26,7 @@ Bot to interact with Plume Network Testnet faucets and manage transactions autom
 2. Navigate into the project directory:
 
     ```bash
-    cd plume-testnet-bot
+    cd PlumeNetwork-Testnet-bot
     ```
 
 3. Install dependencies:
@@ -34,7 +34,7 @@ Bot to interact with Plume Network Testnet faucets and manage transactions autom
     ```bash
     npm install
     ```
-    
+
 4. Create a `privateKeys.json` file in the root directory of the project. Add your private keys in the following format:
 
     ```json
