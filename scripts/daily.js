@@ -24,7 +24,7 @@ async function checkDailyStreak(wallet) {
     try {
       if (walletsCheckedIn.has(wallet.address)) {
         console.log(
-          `[${moment().format('HH:mm:ss')}] Wallet ${wallet.address} has already checked in. Skipping...`.yellow
+          `[${moment().format('HH:mm:ss')}] 钱包 ${wallet.address} 已经签到过了。跳过...`.yellow
         );
         return;
       }
@@ -48,12 +48,10 @@ async function checkDailyStreak(wallet) {
       const result = await wallet.sendTransaction(tx);
       if (result.hash) {
         console.log(
-          `[${moment().format('HH:mm:ss')}] Daily check-in for wallet ${
-            wallet.address
-          } has been successful! 🌟`.green
+          `[${moment().format('HH:mm:ss')}] 钱包 ${wallet.address} 的每日签到成功！ 🌟`.green
         );
         console.log(
-          `[${moment().format('HH:mm:ss')}] Transaction hash: https://testnet-explorer.plumenetwork.xyz/tx/${
+          `[${moment().format('HH:mm:ss')}] 交易哈希: https://testnet-explorer.plumenetwork.xyz/tx/${
             result.hash
           }`.green
         );
@@ -63,9 +61,7 @@ async function checkDailyStreak(wallet) {
       }
     } catch (error) {
       console.log(
-        `[${moment().format('HH:mm:ss')}] Wallet ${
-          wallet.address
-        } check-in failed. Retrying (${attemptCount + 1})... 🚫`.red
+        `[${moment().format('HH:mm:ss')}] 钱包 ${wallet.address} 签到失败。重试(${attemptCount + 1})... 🚫`.red
       );
       console.log('');
       attemptCount++;
@@ -74,9 +70,7 @@ async function checkDailyStreak(wallet) {
   }
 
   console.log(
-    `[${moment().format('HH:mm:ss')}] Wallet ${
-      wallet.address
-    } failed after ${MAX_ATTEMPTS} attempts. Moving to the next wallet. ❌`.red
+    `[${moment().format('HH:mm:ss')}] 钱包 ${wallet.address} 在 ${MAX_ATTEMPTS} 次尝试后失败。转到下一个钱包。 ❌`.red
   );
 }
 
@@ -88,13 +82,13 @@ async function runCheckIn() {
       const wallet = new Wallet(privateKey, provider);
       await checkDailyStreak(wallet);
     } catch (error) {
-      console.log(`[${moment().format('HH:mm:ss')}] Error: ${error}`.red);
+      console.log(`[${moment().format('HH:mm:ss')}] 错误: ${error}`.red);
     }
   }
 }
 
 const userChoice = readlineSync.question(
-  'Would you like to run the check-in:\n0: One-time run\n1: Automate with cron (every 24 hours)\nChoose 0 or 1: '
+  '您想运行签到程序吗？\n0: 一次性运行\n1: 使用cron自动化（每24小时一次）\n选择 0 或 1: '
 );
 
 if (userChoice === '0') {
@@ -109,17 +103,16 @@ if (userChoice === '0') {
   scheduleCheckIn()
     .then(() => {
       console.log(
-        'Check-in scheduling started! The check-in will run every 24 hours and 5 minutes. 🕒'
-          .cyan
+        '已启动签到计划！每24小时5分钟后将自动运行签到。 🕒'.cyan
       );
     })
     .catch((error) => {
       console.log(
-        `[${moment().format('HH:mm:ss')}] Error running check-in before scheduling: ${error}`.red
+        `[${moment().format('HH:mm:ss')}] 在计划签到之前运行时发生错误: ${error}`.red
       );
     });
 } else {
   console.log(
-    'Invalid choice! Please run the script again and choose either 0 or 1.'.red
+    '无效选择！请重新运行脚本并选择0或1。'.red
   );
 }
