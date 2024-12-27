@@ -37,7 +37,7 @@ const runPredictionForAllWallets = async (selectedPair, isLong) => {
       };
 
       console.log(
-        colors.yellow(`Sending transaction from wallet: ${wallet.address}...`)
+        colors.yellow(`从钱包发送交易: ${wallet.address}...`)
       );
       const txResponse = await wallet.sendTransaction(transaction);
       await txResponse.wait();
@@ -46,14 +46,14 @@ const runPredictionForAllWallets = async (selectedPair, isLong) => {
         colors.green(
           `[${moment().format(
             'HH:mm:ss'
-          )}] Transaction successful from wallet: ${wallet.address}`
+          )}] 交易成功来自钱包: ${wallet.address}`
         )
       );
       console.log(
         colors.magenta(
           `[${moment().format(
             'HH:mm:ss'
-          )}] Transaction Hash: https://testnet-explorer.plumenetwork.xyz/tx/${
+          )}] 交易哈希: https://testnet-explorer.plumenetwork.xyz/tx/${
             txResponse.hash
           }`
         )
@@ -64,7 +64,7 @@ const runPredictionForAllWallets = async (selectedPair, isLong) => {
           colors.red(
             `[${moment().format(
               'HH:mm:ss'
-            )}] You already predicted that, please wait for the cooldown (1 hour).`
+            )}] 您已经预测过，请等待冷却期（1小时）。`
           )
         );
       } else if (error.message.includes('Pair has not started yet')) {
@@ -72,7 +72,7 @@ const runPredictionForAllWallets = async (selectedPair, isLong) => {
           colors.red(
             `[${moment().format(
               'HH:mm:ss'
-            )}] Pair is not available yet, try another pair.`
+            )}] 该交易对尚未启动，请尝试其他交易对。`
           )
         );
       } else {
@@ -80,7 +80,7 @@ const runPredictionForAllWallets = async (selectedPair, isLong) => {
           colors.red(
             `[${moment().format(
               'HH:mm:ss'
-            )}] Error with wallet ${privateKey}: ${error.message}`
+            )}] 钱包 ${privateKey} 发生错误: ${error.message}`
           )
         );
       }
@@ -94,7 +94,7 @@ const predictForAllPairs = async (type, isLong) => {
   for (const pair of availablePairs) {
     console.log(
       colors.green(
-        `[${moment().format('HH:mm:ss')}] Predicting for pair: ${pair.name} (${
+        `[${moment().format('HH:mm:ss')}] 预测交易对: ${pair.name} (${
           pair.symbol
         })`
       )
@@ -105,13 +105,13 @@ const predictForAllPairs = async (type, isLong) => {
 
 const main = async () => {
   displayHeader();
-  console.log(`Please wait...`.yellow);
+  console.log(`请稍等...`.yellow);
   console.log('');
 
   try {
     const predictionType = readlineSync.question(
       colors.yellow(
-        'What do you want to predict?\n1. Crypto\n2. Forex\nSelect (1 or 2): '
+        '您想预测什么？\n1. 加密货币\n2. 外汇\n请选择（1或2）： '
       )
     );
 
@@ -119,7 +119,7 @@ const main = async () => {
 
     const choice = readlineSync.question(
       colors.yellow(
-        'Do you want to predict:\n1. One specific pair\n2. All available pairs\nSelect (1 or 2): '
+        '您想预测:\n1. 单一特定交易对\n2. 所有可用交易对\n请选择（1或2）： '
       )
     );
 
@@ -130,13 +130,13 @@ const main = async () => {
       );
       const pairIndex = readlineSync.keyInSelect(
         pairNames,
-        colors.cyan('Choose a pair: ')
+        colors.cyan('选择交易对: ')
       );
 
       if (pairIndex === -1) {
         console.log(
           colors.red(
-            `[${moment().format('HH:mm:ss')}] No pair selected. Exiting...`
+            `[${moment().format('HH:mm:ss')}] 未选择交易对。退出...`
           )
         );
         return;
@@ -145,7 +145,7 @@ const main = async () => {
       const selectedPair = availablePairs[pairIndex];
       console.log(
         colors.green(
-          `[${moment().format('HH:mm:ss')}] You selected: ${
+          `[${moment().format('HH:mm:ss')}] 您选择了: ${
             selectedPair.name
           } (${selectedPair.symbol})`
         )
@@ -156,7 +156,7 @@ const main = async () => {
         const input = readlineSync
           .question(
             colors.yellow(
-              'Do you want to go Long or Short? (Type "long" or "short"): '
+              '您想做多还是做空？（输入 "long" 或 "short"）： '
             )
           )
           .toLowerCase();
@@ -165,14 +165,14 @@ const main = async () => {
           longOrShort = input;
         } else {
           console.log(
-            colors.red('Invalid input, please type "long" or "short".')
+            colors.red('无效输入，请输入 "long" 或 "short"。')
           );
         }
       }
       const isLong = longOrShort === 'long';
 
       const runEveryHour = readlineSync.keyInYN(
-        colors.yellow('Do you want to run this prediction every 1 hour?')
+        colors.yellow('您希望每小时运行一次此预测吗？')
       );
 
       if (runEveryHour) {
@@ -187,7 +187,7 @@ const main = async () => {
           colors.green(
             `[${moment().format(
               'HH:mm:ss'
-            )}] Cron job started: Prediction will run every 1 hour.`
+            )}] Cron任务已启动：预测将每小时运行一次。`
           )
         );
       } else {
@@ -199,7 +199,7 @@ const main = async () => {
         const input = readlineSync
           .question(
             colors.yellow(
-              'Do you want to go Long or Short? (Type "long" or "short"): '
+              '您想做多还是做空？（输入 "long" 或 "short"）： '
             )
           )
           .toLowerCase();
@@ -208,7 +208,7 @@ const main = async () => {
           longOrShort = input;
         } else {
           console.log(
-            colors.red('Invalid input, please type "long" or "short".')
+            colors.red('无效输入，请输入 "long" 或 "short"。')
           );
         }
       }
@@ -216,7 +216,7 @@ const main = async () => {
 
       const runEveryHour = readlineSync.keyInYN(
         colors.yellow(
-          'Do you want to run predictions every 1 hour for all pairs?'
+          '您希望每小时为所有交易对运行预测吗？'
         )
       );
 
@@ -231,29 +231,29 @@ const main = async () => {
           colors.green(
             `[${moment().format(
               'HH:mm:ss'
-            )}] Cron job started: Predictions will run every 1 hour for all pairs.`
+            )}] Cron任务已启动：所有交易对的预测将每小时运行一次。`
           )
         );
       } else {
         await predictForAllPairs(type, isLong);
       }
     } else {
-      console.log(colors.red('Invalid choice, exiting...'));
+      console.log(colors.red('选择无效，退出...'));
     }
   } catch (error) {
     console.log(
-      colors.red(`[${moment().format('HH:mm:ss')}] Error: ${error.message}`)
+      colors.red(`[${moment().format('HH:mm:ss')}] 错误: ${error.message}`)
     );
   } finally {
     console.log('');
     console.log(
-      colors.green(`[${moment().format('HH:mm:ss')}] All tasks done!`)
+      colors.green(`[${moment().format('HH:mm:ss')}] 所有任务完成！`)
     );
     console.log(
       colors.green(
         `[${moment().format(
           'HH:mm:ss'
-        )}] Subscribe: https://t.me/HappyCuanAirdrop`
+        )}] 订阅: https://t.me/HappyCuanAirdrop`
       )
     );
   }
