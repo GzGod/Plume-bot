@@ -75,9 +75,7 @@ async function createRwaToken(privateKey) {
       success = true;
     } catch (error) {
       console.error(
-        `[${moment().format('HH:mm:ss')}] Error sending transaction: ${
-          error.message
-        }`.red
+        `[${moment().format('HH:mm:ss')}] 发送交易时出错: ${error.message}`.red
       );
       await new Promise((resolve) => setTimeout(resolve, 10000));
     }
@@ -88,28 +86,25 @@ async function createRwaToken(privateKey) {
 
 async function runFactoryNFT() {
   displayHeader();
-  console.log('Preparing to mint NFTs...'.yellow);
+  console.log('准备铸造NFTs...'.yellow);
 
   for (const PRIVATE_KEY of PRIVATE_KEYS) {
     try {
       const receipt = await createRwaToken(PRIVATE_KEY);
       console.log(
-        `[${moment().format('HH:mm:ss')}] Successfully minted NFT for wallet ${
-          receipt.from
-        }! 🌟`.green
+        `[${moment().format('HH:mm:ss')}] 成功为钱包 ${receipt.from} 铸造了NFT！ 🌟`.green
       );
       console.log(
         `[${moment().format(
           'HH:mm:ss'
-        )}] Transaction hash: https://testnet-explorer.plumenetwork.xyz/tx/${
+        )}] 交易哈希: https://testnet-explorer.plumenetwork.xyz/tx/${
           receipt.hash
         }`.green
       );
       console.log('');
     } catch (error) {
       console.error(
-        `[${moment().format('HH:mm:ss')}] Error minting NFT: ${error.message}`
-          .red
+        `[${moment().format('HH:mm:ss')}] 铸造NFT时出错: ${error.message}`.red
       );
     }
   }
@@ -118,13 +113,13 @@ async function runFactoryNFT() {
   console.log(
     `[${moment().format(
       'HH:mm:ss'
-    )}] All NFT minting transactions are complete. Congratulations! Subscribe: https://t.me/HappyCuanAirdrop`
+    )}] 所有NFT铸造交易已完成。祝贺！订阅: https://t.me/HappyCuanAirdrop`
       .blue
   );
 }
 
 const userChoice = readlineSync.question(
-  'Would you like to run the NFT minting process:\n0: One-time run\n1: Automate with cron (every 24 hours)\nChoose 0 or 1: '
+  '您想运行NFT铸造过程吗？\n0: 一次性运行\n1: 使用cron自动化（每24小时一次）\n选择 0 或 1: '
 );
 
 if (userChoice === '0') {
@@ -141,19 +136,16 @@ if (userChoice === '0') {
       );
       job.start();
       console.log(
-        'Cron job started! The NFT minting process will run every 24 hours. 🕒'
-          .cyan
+        'Cron任务已启动！NFT铸造过程将每24小时运行一次。 🕒'.cyan
       );
     })
     .catch((error) => {
       console.log(
-        `[${moment().format('HH:mm:ss')}] Error setting up cron job: ${
-          error.message
-        }`.red
+        `[${moment().format('HH:mm:ss')}] 设置Cron任务时出错: ${error.message}`.red
       );
     });
 } else {
   console.log(
-    'Invalid choice! Please run the script again and select either 0 or 1.'.red
+    '无效选择！请重新运行脚本并选择0或1。'.red
   );
 }
