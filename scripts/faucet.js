@@ -18,11 +18,11 @@ const {
 
   while (true) {
     try {
-      console.log('Starting the faucet claiming process...'.yellow);
+      console.log('开始领取水龙头代币的过程...'.yellow);
 
       const walletAddress = getAddress(PRIVATE_KEY, provider);
-      console.log(`Using wallet address: ${walletAddress}`.yellow);
-      console.log('Requesting tokens from the faucet...'.yellow);
+      console.log(`使用钱包地址: ${walletAddress}`.yellow);
+      console.log('向水龙头请求代币...'.yellow);
 
       const { data } = await axios.post(
         'https://faucet.plumenetwork.xyz/api/faucet',
@@ -42,7 +42,7 @@ const {
       )}00000000000000000000000000000000000000000000000000000000000000`;
 
       try {
-        console.log('Preparing transaction...'.yellow);
+        console.log('准备交易...'.yellow);
         const nonce = await wallet.getNonce();
         const feeData = await wallet.provider.getFeeData();
         const gasLimit = await wallet.estimateGas({
@@ -60,7 +60,7 @@ const {
           value: 0,
         };
 
-        console.log('Sending transaction...'.yellow);
+        console.log('发送交易...'.yellow);
         const result = await wallet.sendTransaction(transaction);
         logSuccess(result.from, result.hash);
       } catch (error) {
@@ -68,12 +68,12 @@ const {
       }
     } catch (error) {
       console.log(
-        `[${moment().format('HH:mm:ss')}] Critical error: ${error.message}`.red
+        `[${moment().format('HH:mm:ss')}] 严重错误: ${error.message}`.red
       );
       break;
     }
 
-    console.log('Retrying in 10 seconds...'.yellow);
+    console.log('10秒后重试...'.yellow);
     await delay(10000);
   }
 })();
