@@ -56,14 +56,12 @@ async function doStake(privateKey) {
       return txHash;
     } catch (error) {
       console.log(
-        `[${moment().format('HH:mm:ss')}] Error executing transaction: ${
+        `[${moment().format('HH:mm:ss')}] 执行交易时出错: ${
           error.message
         }`.red
       );
       console.log(
-        `[${moment().format('HH:mm:ss')}] Retrying transaction in ${
-          retryDelay / 1000
-        } seconds...`.yellow
+        `[${moment().format('HH:mm:ss')}] ${retryDelay / 1000} 秒后重试交易...`.yellow
       );
       await new Promise((resolve) => setTimeout(resolve, retryDelay));
     }
@@ -72,7 +70,7 @@ async function doStake(privateKey) {
 
 async function runStakeGoon() {
   displayHeader();
-  console.log('Preparing to stake...'.yellow);
+  console.log('准备质押...'.yellow);
 
   for (const PRIVATE_KEY of PRIVATE_KEYS) {
     try {
@@ -81,13 +79,13 @@ async function runStakeGoon() {
         console.log(
           `[${moment().format(
             'HH:mm:ss'
-          )}] Successfully staked 0.1 $GOONUSD for wallet ${receipt.from}! 🌟`
+          )}] 成功为钱包 ${receipt.from} 质押了 0.1 $GOONUSD！ 🌟`
             .green
         );
         console.log(
           `[${moment().format(
             'HH:mm:ss'
-          )}] Transaction hash: https://testnet-explorer.plumenetwork.xyz/tx/${
+          )}] 交易哈希: https://testnet-explorer.plumenetwork.xyz/tx/${
             receipt.hash
           }`.green
         );
@@ -97,7 +95,7 @@ async function runStakeGoon() {
       console.log(
         `[${moment().format(
           'HH:mm:ss'
-        )}] Error processing transaction. Please try again later.`.red
+        )}] 处理交易时出错。请稍后再试。`.red
       );
     }
   }
@@ -105,13 +103,13 @@ async function runStakeGoon() {
   console.log(
     `[${moment().format(
       'HH:mm:ss'
-    )}] All staking transactions completed. Congratulations! Subscribe: https://t.me/HappyCuanAirdrop`
+    )}] 所有质押交易已完成。祝贺！`
       .blue
   );
 }
 
 const userChoice = readlineSync.question(
-  'Would you like to run the staking process:\n0: One-time run\n1: Automate with cron (every 24 hours)\nChoose 0 or 1: '
+  '您想运行质押过程吗？\n0: 一次性运行\n1: 使用cron自动化（每24小时一次）\n选择 0 或 1: '
 );
 
 if (userChoice === '0') {
@@ -128,18 +126,18 @@ if (userChoice === '0') {
       );
       job.start();
       console.log(
-        'Cron job started! The staking process will run every 24 hours. 🕒'.cyan
+        'Cron任务已启动！质押过程将每24小时运行一次。 🕒'.cyan
       );
     })
     .catch((error) => {
       console.log(
-        `[${moment().format('HH:mm:ss')}] Error setting up cron job: ${
+        `[${moment().format('HH:mm:ss')}] 设置Cron任务时出错: ${
           error.message
         }`.red
       );
     });
 } else {
   console.log(
-    'Invalid choice! Please run the script again and select either 0 or 1.'.red
+    '无效选择！请重新运行脚本并选择0或1。'.red
   );
 }
