@@ -15,13 +15,13 @@ const scriptCommands = {
 };
 
 const scriptNames = {
-  0: 'Claim Faucet ETH Daily',
-  1: 'Auto Swap',
-  2: 'Auto Stake 0.1 goonUSD',
-  3: 'Auto Daily Check-In',
-  4: 'Auto Mint NFT',
-  5: 'Claim Faucet GOON Daily',
-  6: 'Auto Predict',
+  0: '每日领取水龙头ETH',
+  1: '自动交换',
+  2: '自动质押0.1 goonUSD',
+  3: '自动每日签到',
+  4: '自动铸造NFT',
+  5: '每日领取GOON水龙头',
+  6: '自动预测',
 };
 
 async function validatePrivateKeys() {
@@ -29,7 +29,7 @@ async function validatePrivateKeys() {
     const fileContent = fs.readFileSync('privateKeys.json', 'utf-8').trim();
 
     if (!fileContent) {
-      console.error('The privateKeys.json file is empty. Please add private keys.'.red);
+      console.error('privateKeys.json文件为空，请添加私钥。'.red);
       process.exit(1);
     }
 
@@ -39,13 +39,13 @@ async function validatePrivateKeys() {
       try {
         await evm.validated(key);
       } catch {
-        console.error(`Invalid private key detected: ${key}`.red);
+        console.error(`检测到无效私钥: ${key}`.red);
         process.exit(1);
       }
     }
 
   } catch (error) {
-    console.error('Error reading or validating private keys, add file privateKeys.json.');
+    console.error('读取或验证私钥时出错，请添加privateKeys.json文件。');
     process.exit(1);
   }
 }
@@ -55,23 +55,23 @@ async function main() {
 
   displayHeader();
   console.log('');
-  console.log('Please choose a script to run:'.underline);
+  console.log('请选择要运行的脚本：'.underline);
 
   Object.keys(scriptNames).forEach((key) => {
     console.log(`${key}: ${scriptNames[key].yellow}`);
   });
 
   const userChoice = parseInt(
-    readlineSync.question('Choose a script number: '.cyan),
+    readlineSync.question('选择脚本编号: '.cyan),
     10
   );
 
   if (scriptCommands.hasOwnProperty(userChoice)) {
-    console.log(`Please run: ${scriptCommands[userChoice]}`.blue);
+    console.log(`请运行: ${scriptCommands[userChoice]}`.blue);
     console.log('');
   } else {
     console.log(
-      'Invalid choice! Please run the script again and choose a valid number.'.red
+      '无效选择！请重新运行脚本并选择有效的编号。'.red
     );
   }
 }
