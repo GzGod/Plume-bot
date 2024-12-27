@@ -14,7 +14,7 @@ const PROXY_CA = PLUME_ABI.at(-1).CA;
 async function getData(wallet) {
   try {
     console.log(
-      `[${moment().format('HH:mm:ss')}] Requesting faucet data for wallet: ${
+      `[${moment().format('HH:mm:ss')}] 请求钱包的代币水龙头数据: ${
         wallet.address
       }...`.blue
     );
@@ -29,7 +29,7 @@ async function getData(wallet) {
     });
 
     console.log(
-      `[${moment().format('HH:mm:ss')}] Successfully retrieved data: salt = ${
+      `[${moment().format('HH:mm:ss')}] 成功获取数据: salt = ${
         data.salt
       }, signature = ${data.signature}`.green
     );
@@ -39,7 +39,7 @@ async function getData(wallet) {
     console.error(
       `[${moment().format(
         'HH:mm:ss'
-      )}] Error occurred while fetching faucet data: ${error.message}`.red
+      )}] 获取代币水龙头数据时发生错误: ${error.message}`.red
     );
     throw error;
   }
@@ -50,7 +50,7 @@ async function claimFaucet(wallet, token, salt, signature) {
     console.log(
       `[${moment().format(
         'HH:mm:ss'
-      )}] Preparing to claim faucet using token: ${token}, salt: ${salt}, and signature: ${signature}...`
+      )}] 准备使用代币: ${token}, salt: ${salt}, 和签名: ${signature} 领取水龙头...`
         .blue
     );
 
@@ -72,7 +72,7 @@ async function claimFaucet(wallet, token, salt, signature) {
 
     const txResponse = await wallet.sendTransaction(transaction);
     console.log(
-      `[${moment().format('HH:mm:ss')}] Transaction successfully sent. Hash: ${
+      `[${moment().format('HH:mm:ss')}] 交易已成功发送。哈希: ${
         txResponse.hash
       }`.green
     );
@@ -80,7 +80,7 @@ async function claimFaucet(wallet, token, salt, signature) {
     return txResponse;
   } catch (error) {
     console.error(
-      `[${moment().format('HH:mm:ss')}] Error occurred while claiming faucet: ${
+      `[${moment().format('HH:mm:ss')}] 领取水龙头时发生错误: ${
         error.reason || error.message
       }`.red
     );
@@ -96,41 +96,41 @@ async function claimFaucet(wallet, token, salt, signature) {
       console.log(
         `[${moment().format(
           'HH:mm:ss'
-        )}] Initializing wallet with provided private key...`.blue
+        )}] 使用提供的私钥初始化钱包...`.blue
       );
       const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
 
       console.log(
-        `[${moment().format('HH:mm:ss')}] Fetching faucet data...`.blue
+        `[${moment().format('HH:mm:ss')}] 获取代币水龙头数据...`.blue
       );
       const { salt, signature, token } = await getData(wallet);
 
       console.log(
         `[${moment().format(
           'HH:mm:ss'
-        )}] Attempting to claim faucet for wallet: ${wallet.address}...`.blue
+        )}] 尝试为钱包领取代币: ${wallet.address}...`.blue
       );
       const response = await claimFaucet(wallet, token, salt, signature);
 
       console.log(
         `[${moment().format(
           'HH:mm:ss'
-        )}] Successfully claimed token for wallet: ${wallet.address}`.green
+        )}] 成功为钱包领取代币: ${wallet.address}`.green
       );
       console.log(
         `[${moment().format(
           'HH:mm:ss'
-        )}] Transaction details: https://testnet-explorer.plumenetwork.xyz/tx/${
+        )}] 交易详情: https://testnet-explorer.plumenetwork.xyz/tx/${
           response.hash
         }`.green
       );
     } catch (error) {
       console.error(
-        `[${moment().format('HH:mm:ss')}] Error: ${error.message}`.red
+        `[${moment().format('HH:mm:ss')}] 错误: ${error.message}`.red
       );
     }
     console.log(
-      `[${moment().format('HH:mm:ss')}] Retrying in 10 seconds...`.yellow
+      `[${moment().format('HH:mm:ss')}] 10秒后重试...`.yellow
     );
     await delay(10000);
   }
