@@ -56,12 +56,12 @@ let config = loadConfig();
 
 if (!config) {
   const txCountInput = readlineSync.question(
-    'How many transactions do you want? (default is 1): '
+    '您想要进行多少次交易？（默认是1次）： '
   );
   const transactionCount = txCountInput ? parseInt(txCountInput, 10) : 1;
 
   const autoRunInput = readlineSync.question(
-    'Do you want to auto run this script every 24 hours? (Y/N): '
+    '您希望每24小时自动运行此脚本吗？（Y/N）： '
   );
   const autoRun = autoRunInput.toLowerCase() === 'y';
 
@@ -92,14 +92,14 @@ const performTransaction = async () => {
       console.log(
         `[${moment().format(
           'HH:mm:ss'
-        )}] Successfully swapped 0.001 $GOON to 0.999 $goonUSD from ${
+        )}] 成功将 0.001 $GOON 转换为 0.999 $goonUSD，来自 ${
           transactionResponse.from
-        }!`.green
+        }！`.green
       );
       console.log(
         `[${moment().format(
           'HH:mm:ss'
-        )}] Transaction hash: https://testnet-explorer.plumenetwork.xyz/tx/${
+        )}] 交易哈希: https://testnet-explorer.plumenetwork.xyz/tx/${
           transactionResponse.hash
         }`.green
       );
@@ -109,7 +109,7 @@ const performTransaction = async () => {
       console.log(
         `[${moment().format(
           'HH:mm:ss'
-        )}] Insufficient $GOON. Please claim from the faucet first. Error details: ${
+        )}] $GOON余额不足。请先从水龙头领取。错误详情: ${
           error.message
         }`.red
       );
@@ -120,7 +120,7 @@ const performTransaction = async () => {
 
 const performTransactions = async (count) => {
   displayHeader();
-  console.log(`[${moment().format('HH:mm:ss')}] Please wait...`.yellow);
+  console.log(`[${moment().format('HH:mm:ss')}] 请稍等...`.yellow);
   console.log('');
 
   while (count > 0) {
@@ -132,7 +132,7 @@ const performTransactions = async (count) => {
       console.log(
         `[${moment().format(
           'HH:mm:ss'
-        )}] All transactions have been completed. Congrats! Subscribe: https://t.me/HappyCuanAirdrop`
+        )}] 所有交易已完成。恭喜！订阅: 
           .blue
       );
     }
@@ -160,7 +160,7 @@ const performTransactions = async (count) => {
     console.log(
       `[${moment().format(
         'HH:mm:ss'
-      )}] Cron job scheduled to run every 24 hours at midnight (Asia/Jakarta).`
+      )}] Cron任务已安排，每24小时在午夜（Asia/Jakarta）运行一次。`
         .yellow
     );
   }
